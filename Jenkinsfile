@@ -34,9 +34,6 @@ pipeline {
         }
 
         stage('CanaryDeploy') {
-            environment {
-                CANARY_REPLICAS = 1
-            }
             steps {
                 script {
                     bat "kubectl apply -f train-schedule-kube-canary.yml"
@@ -45,9 +42,6 @@ pipeline {
         }
 
         stage('DeployToProduction') {
-            environment {
-                CANARY_REPLICAS = 0
-            }
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
